@@ -1,0 +1,47 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+ $(function(){
+
+
+	//var data = $("#myForm").serialize();
+	//console.log(data);
+
+	$.ajax({url:'/get_mobiles/',
+			type:'GET',
+			contentType:false,
+			processData:false,
+		    dataType:'json',
+		    success:function(resp){
+		    	$.each(resp,function(key,val){
+		    		$('table').append('<tr><td>'+val.model_no+'</td><td>'+val.price+'</td><td>'+val.brand_id+'</td><td><img src="/'+val.image+'"/></td><td><a href="/update_mobiles/'+val.id+'/">Edit</a>|<a href="/delete_mobiles/'+val.id+'/">Delete</a></td></tr>');
+
+		    	});
+
+		    }
+		});
+
+
+
+ });
+</script>
+<style type="text/css">
+img{
+
+	width:100px;
+	height: 100px;
+}
+</style>
+
+
+<table border="1">
+	<tr>
+		<td>MNO</td>
+				<td>Price</td>
+
+		<td>Brand</td>
+		<td> IMAGE</td>
+		<td>Actions</td>
+	</tr>
+
+
+	</table>

@@ -1,0 +1,72 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+ $(function(){
+
+
+$("form#myForm").submit(function(event){
+	event.preventDefault();
+	//var data = $("#myForm").serialize();
+	var formdata = new FormData($(this)[0]);
+	//console.log(data);
+	var path=window.location.pathname;
+
+	if(path ==  '/add_mobiles/'){
+	$.ajax({url:'/add_mobiles/',
+			data:formdata,
+			type:'POST',
+			contentType:false,
+			processData:false,
+		    dataType:'json',
+		    success:function(resp){
+		    	$.each(resp,function(key,val){
+		    		$('table').append('<tr><td>'+val.model_no+'</td><td>'+val.price+'</td><td>'+val.brand_id+'</td></tr>');
+
+		    	});
+
+		    }
+		});
+	}
+	else{
+		$.ajax({url:path,
+			data:formdata,
+			type:'POST',
+			contentType:false,
+			processData:false,
+		    dataType:'json',
+		    success:function(resp){
+		    	if(resp.status == 'success'){
+		    	window.location='/view_mobiles/';
+		    }
+
+		    }
+		});
+
+	}
+
+});
+
+ });
+</script>
+<form method='POST' action = '' id="myForm" enctype="multipart/form-data">
+
+	{% csrf_token %}
+	{{form.as_p}}
+
+<button>Submit</button>
+
+
+
+</form>
+
+
+<table border="1">
+	<tr>
+		<td>MNO</td>
+				<td>Price</td>
+
+		<td>Brand</td>
+
+	</tr>
+
+
+	</table>
